@@ -127,7 +127,9 @@ export class UpdateCheckCore {
         }
         if (semverCompare(currentVersion, latestLtsVersion) < 0) {
           const isNew = this.nodeUpdates.length === 0 || !this.nodeUpdates.includes(latestLtsVersion)
-          const logLevel = isFirstDailyRun || isNew ? LogLevel.INFO : LogLevel.DEBUG
+          const logLevel = isFirstDailyRun || isNew
+            ? LogLevel.INFO
+            : LogLevel.DEBUG
           this.log.log(logLevel, `Node.js update available: ${currentVersion} → ${latestLtsVersion}`)
           this.nodeUpdates = [latestLtsVersion]
           updatesAvailable.push({
@@ -173,7 +175,9 @@ export class UpdateCheckCore {
           const latestNpmVersion = await this.getLatestNpmVersion()
           if (this.compareSemver(currentNpmVersion, latestNpmVersion) < 0) {
             const isNew = this.npmUpdates.length === 0 || !this.npmUpdates.includes(latestNpmVersion)
-            const logLevel = isFirstDailyRun || isNew ? LogLevel.INFO : LogLevel.DEBUG
+            const logLevel = isFirstDailyRun || isNew
+              ? LogLevel.INFO
+              : LogLevel.DEBUG
             this.log.log(logLevel, `npm update available: ${currentNpmVersion} -> ${latestNpmVersion}`)
             this.npmUpdates = [latestNpmVersion]
             updatesAvailable.push({
@@ -211,7 +215,9 @@ export class UpdateCheckCore {
           updatesAvailable.push(homebridge)
           const version: string = homebridge.latestVersion
           const isNew = this.hbUpdates.length === 0 || !this.hbUpdates.includes(version)
-          const logLevel = isFirstDailyRun || isNew ? LogLevel.INFO : LogLevel.DEBUG
+          const logLevel = isFirstDailyRun || isNew
+            ? LogLevel.INFO
+            : LogLevel.DEBUG
           this.log.log(logLevel, `Homebridge update available: ${version}`)
           this.hbUpdates = [version]
         } else {
@@ -234,7 +240,9 @@ export class UpdateCheckCore {
               updatesAvailable.push(homebridgeUI)
               const version: string = homebridgeUI.latestVersion
               const isNew = this.hbUIUpdates.length === 0 || !this.hbUIUpdates.includes(version)
-              const logLevel = isFirstDailyRun || isNew ? LogLevel.INFO : LogLevel.DEBUG
+              const logLevel = isFirstDailyRun || isNew
+                ? LogLevel.INFO
+                : LogLevel.DEBUG
               this.log.log(logLevel, `Homebridge UI update available: ${version}`)
               this.hbUIUpdates = [version]
             } else {
@@ -262,7 +270,9 @@ export class UpdateCheckCore {
             updatesAvailable.push(plugin)
             const version: string = plugin.latestVersion
             const isNew = this.pluginUpdates.length === 0 || !this.pluginUpdates.includes(version)
-            const logLevel = isFirstDailyRun || isNew ? LogLevel.INFO : LogLevel.DEBUG
+            const logLevel = isFirstDailyRun || isNew
+              ? LogLevel.INFO
+              : LogLevel.DEBUG
             this.log.log(logLevel, `Homebridge plugin update available: ${plugin.name} ${plugin.latestVersion}`)
             this.pluginUpdates.push(version)
           }
@@ -285,7 +295,9 @@ export class UpdateCheckCore {
         updatesAvailable.push(docker)
         const version: string = docker.latestVersion
         const isNew = this.dockerUpdates.length === 0 || !this.dockerUpdates.includes(version)
-        const logLevel = isFirstDailyRun || isNew ? LogLevel.INFO : LogLevel.DEBUG
+        const logLevel = isFirstDailyRun || isNew
+          ? LogLevel.INFO
+          : LogLevel.DEBUG
         this.log.log(logLevel, `Docker update available: ${version}`)
         this.dockerUpdates = [version]
       }
@@ -450,7 +462,9 @@ export class UpdateCheckCore {
       const sameVersion = previous?.version === target.latestVersion
       state[target.name] = {
         version: target.latestVersion,
-        attempts: sameVersion ? previous.attempts + 1 : 1,
+        attempts: sameVersion
+          ? previous.attempts + 1
+          : 1,
         firstAttempt: sameVersion ? previous.firstAttempt : now,
         lastAttempt: now,
       }
@@ -482,7 +496,9 @@ export class UpdateCheckCore {
         return {}
       }
       const parsed = JSON.parse(readFileSync(this.autoUpdateStatePath, 'utf8'))
-      return (parsed && typeof parsed === 'object') ? parsed as Record<string, AutoUpdateAttempt> : {}
+      return (parsed && typeof parsed === 'object')
+        ? parsed as Record<string, AutoUpdateAttempt>
+        : {}
     } catch (e) {
       this.log.debug(`Could not read auto-update state: ${e}`)
       return {}
@@ -545,7 +561,9 @@ export class UpdateCheckCore {
       return undefined
     }
     const version = (result.stdout || '').trim()
-    return version.length > 0 ? version : undefined
+    return version.length > 0
+      ? version
+      : undefined
   }
 
   private async getLatestNpmVersion(): Promise<string> {

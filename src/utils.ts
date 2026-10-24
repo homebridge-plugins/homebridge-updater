@@ -61,7 +61,9 @@ export function describeError(error: unknown): string {
   // String(error) on a plain object gives "[object Object]", which is no more
   // use to a reader than "undefined" was.
   const described = String(error)
-  return described === '[object Object]' ? 'unknown error' : described
+  return described === '[object Object]'
+    ? 'unknown error'
+    : described
 }
 
 /**
@@ -88,8 +90,12 @@ export function createPlatformProxy(HAPPlatform: any, MatterPlatform: any): any 
     constructor(log: any, config: PlatformConfig, api: any) {
       const enableMatter = (config as any).enableMatter ?? true
       const hasMatterApi = !!api?.matter
-      const matterAvailable = typeof api?.isMatterAvailable === 'function' ? !!api.isMatterAvailable() : hasMatterApi
-      const matterEnabled = typeof api?.isMatterEnabled === 'function' ? !!api.isMatterEnabled() : hasMatterApi
+      const matterAvailable = typeof api?.isMatterAvailable === 'function'
+        ? !!api.isMatterAvailable()
+        : hasMatterApi
+      const matterEnabled = typeof api?.isMatterEnabled === 'function'
+        ? !!api.isMatterEnabled()
+        : hasMatterApi
 
       if (enableMatter && MatterPlatform && hasMatterApi && matterAvailable && matterEnabled) {
         log?.debug?.('[Protocol] Using Matter platform implementation')
@@ -111,7 +117,9 @@ export function createPlatformProxy(HAPPlatform: any, MatterPlatform: any): any 
         if (!matterEnabled) {
           reasons.push('Matter not enabled')
         }
-        const reasonText = reasons.length ? reasons.join(', ') : 'unknown reason'
+        const reasonText = reasons.length
+          ? reasons.join(', ')
+          : 'unknown reason'
         log?.debug?.(`[Protocol] Falling back to HAP: ${reasonText}`)
       } else {
         log?.debug?.('[Protocol] Using HAP platform implementation')

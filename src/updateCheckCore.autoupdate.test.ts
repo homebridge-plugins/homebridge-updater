@@ -27,17 +27,32 @@ describe('auto-update loop guard (#257)', () => {
   })
 
   it('skips a target already attempted at the same version within cooldown', () => {
-    const record = { version: '2.0.0', attempts: 1, firstAttempt: now - 60_000, lastAttempt: now - 60_000 }
+    const record = {
+      version: '2.0.0',
+      attempts: 1,
+      firstAttempt: now - 60_000,
+      lastAttempt: now - 60_000,
+    }
     expect(isLooping(record, '2.0.0', now)).toBe(true)
   })
 
   it('applies when a newer version than the last attempt is offered', () => {
-    const record = { version: '2.0.0', attempts: 3, firstAttempt: now - 60_000, lastAttempt: now - 60_000 }
+    const record = {
+      version: '2.0.0',
+      attempts: 3,
+      firstAttempt: now - 60_000,
+      lastAttempt: now - 60_000,
+    }
     expect(isLooping(record, '2.1.0', now)).toBe(false)
   })
 
   it('retries once the cooldown has elapsed', () => {
-    const record = { version: '2.0.0', attempts: 5, firstAttempt: now - (2 * COOLDOWN_MS), lastAttempt: now - COOLDOWN_MS - 1 }
+    const record = {
+      version: '2.0.0',
+      attempts: 5,
+      firstAttempt: now - (2 * COOLDOWN_MS),
+      lastAttempt: now - COOLDOWN_MS - 1,
+    }
     expect(isLooping(record, '2.0.0', now)).toBe(false)
   })
 })

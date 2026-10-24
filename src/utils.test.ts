@@ -9,7 +9,13 @@ describe('isFailureSensorEnabled', () => {
 
   it('should return false when no auto-update option is enabled', () => {
     expect(isFailureSensorEnabled({} as any)).toBe(false)
-    expect(isFailureSensorEnabled({ autoUpdateHomebridge: false, autoUpdateHomebridgeUI: false, autoUpdatePlugins: false, autoUpdateNode: false, autoUpdateNpm: false } as any)).toBe(false)
+    expect(isFailureSensorEnabled({
+      autoUpdateHomebridge: false,
+      autoUpdateHomebridgeUI: false,
+      autoUpdatePlugins: false,
+      autoUpdateNode: false,
+      autoUpdateNpm: false,
+    } as any)).toBe(false)
   })
 
   it('should return true when at least one auto-update option is enabled', () => {
@@ -172,7 +178,11 @@ describe('createPlatformProxy', () => {
     }
 
     const ProxyCtor = createPlatformProxy(MockHAPPlatform, MockMatterPlatform)
-    const api = { matter: {}, isMatterAvailable: () => true, isMatterEnabled: () => true }
+    const api = {
+      matter: {},
+      isMatterAvailable: () => true,
+      isMatterEnabled: () => true,
+    }
     const proxy = new ProxyCtor('log', { enableMatter: true }, api)
 
     const staleAccessory = { UUID: 'old-hap-uuid', displayName: 'Homebridge Plugin Update' }
@@ -224,17 +234,37 @@ describe('orderAutoUpdateTargets (#278)', () => {
   const t = (name: string) => ({ name })
 
   it('moves the ui to the end, keeping the relative order of everything else', () => {
-    expect(orderAutoUpdateTargets([t('homebridge'), t('homebridge-config-ui-x'), t('homebridge-noip'), t('homebridge-updater')]))
-      .toEqual([t('homebridge'), t('homebridge-noip'), t('homebridge-updater'), t('homebridge-config-ui-x')])
+    expect(orderAutoUpdateTargets([
+      t('homebridge'),
+      t('homebridge-config-ui-x'),
+      t('homebridge-noip'),
+      t('homebridge-updater'),
+    ]))
+      .toEqual([
+        t('homebridge'),
+        t('homebridge-noip'),
+        t('homebridge-updater'),
+        t('homebridge-config-ui-x'),
+      ])
   })
 
   it('leaves a batch without the ui untouched', () => {
-    expect(orderAutoUpdateTargets([t('homebridge'), t('homebridge-noip')]))
-      .toEqual([t('homebridge'), t('homebridge-noip')])
+    expect(orderAutoUpdateTargets([
+      t('homebridge'),
+      t('homebridge-noip'),
+    ]))
+      .toEqual([
+        t('homebridge'),
+        t('homebridge-noip'),
+      ])
   })
 
   it('handles a ui-only batch and an empty batch', () => {
-    expect(orderAutoUpdateTargets([t('homebridge-config-ui-x')])).toEqual([t('homebridge-config-ui-x')])
+    expect(orderAutoUpdateTargets([
+      t('homebridge-config-ui-x'),
+    ])).toEqual([
+      t('homebridge-config-ui-x'),
+    ])
     expect(orderAutoUpdateTargets([])).toEqual([])
   })
 })

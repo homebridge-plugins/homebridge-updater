@@ -125,7 +125,9 @@ export class UiApi {
   public async getNpmDistTags(packageName: string): Promise<Record<string, string>> {
     const url = `https://registry.npmjs.org/${encodeURIComponent(packageName).replace(/^%40/, '@')}`
     return await new Promise<Record<string, string>>((resolve, reject) => {
-      const req = https.get(url, { headers: { accept: 'application/vnd.npm.install-v1+json' } }, (res) => {
+      const req = https.get(url, {
+        headers: { accept: 'application/vnd.npm.install-v1+json' },
+      }, (res) => {
         let data = ''
         // Without an 'error' listener on the response, a connection dropped after
         // the headers arrive is an uncaught exception - and the promise never
@@ -307,10 +309,14 @@ export class UiApi {
   }
 
   public async updateHomebridge(targetVersion?: string): Promise<boolean> {
-    this.log.info(`Attempting to update Homebridge${targetVersion ? ` to ${targetVersion}` : ' to latest version'}`)
+    this.log.info(`Attempting to update Homebridge${targetVersion
+      ? ` to ${targetVersion}`
+      : ' to latest version'}`)
 
     try {
-      const args = ['install', '-g', `homebridge${targetVersion ? `@${targetVersion}` : '@latest'}`]
+      const args = ['install', '-g', `homebridge${targetVersion
+        ? `@${targetVersion}`
+        : '@latest'}`]
       const result = await this.runNpmCommand(args)
       this.log.info(`Homebridge update command completed successfully (${result})`)
       return true
@@ -333,7 +339,9 @@ export class UiApi {
     if (!this.isConfigured()) {
       return false
     }
-    const query = targetVersion ? `?version=${encodeURIComponent(targetVersion)}` : ''
+    const query = targetVersion
+      ? `?version=${encodeURIComponent(targetVersion)}`
+      : ''
     const apiPath = `/api/plugins/update/${encodeURIComponent(packageName)}${query}`
     try {
       const response = await this.nativeRequestWithRetry('POST', this.baseUrl + apiPath, {
@@ -346,7 +354,9 @@ export class UiApi {
         timeout: 60000,
       }) as { ok?: boolean } | undefined
       if (response?.ok === true) {
-        this.log.info(`Queued update for ${packageName}${targetVersion ? ` to ${targetVersion}` : ''} via the Homebridge UI`)
+        this.log.info(`Queued update for ${packageName}${targetVersion
+          ? ` to ${targetVersion}`
+          : ''} via the Homebridge UI`)
         return true
       }
       this.log.warn(`Homebridge UI did not confirm the update for ${packageName}: ${JSON.stringify(response)}`)
@@ -358,10 +368,14 @@ export class UiApi {
   }
 
   public async updatePlugin(pluginName: string, targetVersion?: string): Promise<boolean> {
-    this.log.info(`Attempting to update plugin ${pluginName}${targetVersion ? ` to ${targetVersion}` : ' to latest version'}`)
+    this.log.info(`Attempting to update plugin ${pluginName}${targetVersion
+      ? ` to ${targetVersion}`
+      : ' to latest version'}`)
 
     try {
-      const args = ['install', '-g', `${pluginName}${targetVersion ? `@${targetVersion}` : '@latest'}`]
+      const args = ['install', '-g', `${pluginName}${targetVersion
+        ? `@${targetVersion}`
+        : '@latest'}`]
       const result = await this.runNpmCommand(args)
       this.log.info(`Plugin ${pluginName} update command completed successfully (${result})`)
       return true
@@ -372,10 +386,14 @@ export class UiApi {
   }
 
   public async updateNpm(targetVersion?: string): Promise<boolean> {
-    this.log.info(`Attempting to update npm${targetVersion ? ` to ${targetVersion}` : ' to latest version'}`)
+    this.log.info(`Attempting to update npm${targetVersion
+      ? ` to ${targetVersion}`
+      : ' to latest version'}`)
 
     try {
-      const args = ['install', '-g', `npm${targetVersion ? `@${targetVersion}` : '@latest'}`]
+      const args = ['install', '-g', `npm${targetVersion
+        ? `@${targetVersion}`
+        : '@latest'}`]
       const result = await this.runNpmCommand(args)
       this.log.info(`npm update command completed successfully (${result})`)
       return true
@@ -567,7 +585,9 @@ export class UiApi {
       // Not the body. makeCall() is used for /api/config-editor/plugin/<name>,
       // so this was dumping other plugins' whole config blocks - their
       // usernames, passwords and api keys - into this plugin's debug log.
-      this.log.debug(`${this.baseUrl + apiPath}: ${Array.isArray(data) ? `${data.length} item(s)` : 'ok'}`)
+      this.log.debug(`${this.baseUrl + apiPath}: ${Array.isArray(data)
+        ? `${data.length} item(s)`
+        : 'ok'}`)
       if (!Array.isArray(data)) {
         return [data]
       }
@@ -575,7 +595,9 @@ export class UiApi {
     } catch (error: any) {
       this.log.error(`Error connecting to ${this.baseUrl + apiPath}: ${describeError(error)}`)
       if (error.code === 'ERR_BAD_REQUEST' && error.status === 404 && apiPath === ApiPluginEndpoints.getIgnoredPluginList) {
-        this.log.debug(`Error: ${error instanceof Error ? error.message : String(error)}`)
+        this.log.debug(`Error: ${error instanceof Error
+          ? error.message
+          : String(error)}`)
         this.log.warn('This feature requires a newer version of Homebridge UI. Please update to the latest version.')
       }
       return []

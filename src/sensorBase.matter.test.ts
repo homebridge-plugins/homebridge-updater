@@ -24,7 +24,9 @@ function fakeDeviceType(name: string): any {
     with: () => type,
   }
   type.requirements = new Proxy({}, {
-    get: () => ({ with: () => type }),
+    get: () => ({
+      with: () => type,
+    }),
   })
   return type
 }
@@ -43,7 +45,9 @@ function fakeApi(): { api: API, registered: any[] } {
 
   const api = {
     matter: {
-      uuid: { generate: (input: string) => `uuid-${input}` },
+      uuid: {
+        generate: (input: string) => `uuid-${input}`,
+      },
       deviceTypes,
       registerPlatformAccessories: (_plugin: string, _platform: string, accessories: any[]) => {
         registered.push(...accessories)
@@ -72,7 +76,13 @@ const SENSOR_TYPES = [
 describe('matterSensor declared clusters', () => {
   it.each(SENSOR_TYPES)('%s declares exactly the cluster setState writes to', (sensorType) => {
     const { api, registered } = fakeApi()
-    const sensor = new MatterSensor({ api, sensorType, log: { warn: vi.fn() } } as any)
+    const sensor = new MatterSensor({
+      api,
+      sensorType,
+      log: {
+        warn: vi.fn(),
+      },
+    } as any)
     const info = MatterSensor.getMatterInfo(api, sensorType)
 
     sensor.configure({ displayName: `${sensorType} sensor` } as PlatformAccessory)
@@ -88,7 +98,13 @@ describe('matterSensor declared clusters', () => {
 
   it('writes its state to the cluster it declared', async () => {
     const { api, registered } = fakeApi()
-    const sensor = new MatterSensor({ api, sensorType: 'motion', log: { warn: vi.fn() } } as any)
+    const sensor = new MatterSensor({
+      api,
+      sensorType: 'motion',
+      log: {
+        warn: vi.fn(),
+      },
+    } as any)
 
     sensor.configure({ displayName: 'Plugin Update' } as PlatformAccessory)
     sensor.setState(true)
@@ -97,7 +113,9 @@ describe('matterSensor declared clusters', () => {
     expect((api as any).matter.updateAccessoryState).toHaveBeenCalledWith(
       registered[0].UUID,
       declaredCluster,
-      { occupancy: { occupied: true } },
+      {
+        occupancy: { occupied: true },
+      },
     )
   })
 })

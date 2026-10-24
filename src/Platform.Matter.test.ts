@@ -27,14 +27,25 @@ describe('pluginUpdateMatterPlatform stale HAP cleanup', () => {
     }
 
     const mockApi = {
-      matter: { registerPlatformAccessories: vi.fn(), uuid: { generate: vi.fn().mockReturnValue('matter-uuid') } },
-      hap: { uuid: { generate: vi.fn().mockReturnValue('hap-uuid') } },
+      matter: {
+        registerPlatformAccessories: vi.fn(),
+        uuid: {
+          generate: vi.fn().mockReturnValue('matter-uuid'),
+        },
+      },
+      hap: {
+        uuid: {
+          generate: vi.fn().mockReturnValue('hap-uuid'),
+        },
+      },
       on: vi.fn((event: string, cb: () => void) => {
         if (event === 'didFinishLaunching') {
           didFinishListeners.push(cb)
         }
       }),
-      user: { storagePath: vi.fn().mockReturnValue('/tmp') },
+      user: {
+        storagePath: vi.fn().mockReturnValue('/tmp'),
+      },
       unregisterPlatformAccessories: vi.fn((...args: any[]) => {
         unregisterCalls.push({ pluginName: args[0], platformName: args[1], accessories: args[2] })
       }),
@@ -56,7 +67,13 @@ describe('pluginUpdateMatterPlatform stale HAP cleanup', () => {
       }
     }
 
-    return { mockLog, mockApi, mockConfig, unregisterCalls, fireDidFinishLaunching }
+    return {
+      mockLog,
+      mockApi,
+      mockConfig,
+      unregisterCalls,
+      fireDidFinishLaunching,
+    }
   }
 
   /**
@@ -89,7 +106,10 @@ describe('pluginUpdateMatterPlatform stale HAP cleanup', () => {
     const { mockApi, unregisterCalls } = buildMocks()
     const { configureAccessory } = buildSimulator(mockApi)
 
-    const legacyAccessory = { UUID: mockApi.hap.uuid.generate('PluginUpdate'), displayName: 'Homebridge Plugin Update' }
+    const legacyAccessory = {
+      UUID: mockApi.hap.uuid.generate('PluginUpdate'),
+      displayName: 'Homebridge Plugin Update',
+    }
     configureAccessory(legacyAccessory)
 
     // Must NOT be called yet — bridge is not fully initialized until didFinishLaunching
@@ -100,7 +120,10 @@ describe('pluginUpdateMatterPlatform stale HAP cleanup', () => {
     const { mockApi, unregisterCalls } = buildMocks()
     const { configureAccessory, removeStaleAccessories } = buildSimulator(mockApi)
 
-    const legacyAccessory = { UUID: mockApi.hap.uuid.generate('PluginUpdate'), displayName: 'Homebridge Plugin Update' }
+    const legacyAccessory = {
+      UUID: mockApi.hap.uuid.generate('PluginUpdate'),
+      displayName: 'Homebridge Plugin Update',
+    }
     configureAccessory(legacyAccessory)
     removeStaleAccessories()
 
@@ -114,7 +137,10 @@ describe('pluginUpdateMatterPlatform stale HAP cleanup', () => {
     const { mockApi, unregisterCalls } = buildMocks()
     const { configureAccessory, removeStaleAccessories } = buildSimulator(mockApi)
 
-    const v3Accessory = { UUID: mockApi.hap.uuid.generate('PluginUpdateCheck-UpdateSensor'), displayName: 'PluginUpdate' }
+    const v3Accessory = {
+      UUID: mockApi.hap.uuid.generate('PluginUpdateCheck-UpdateSensor'),
+      displayName: 'PluginUpdate',
+    }
     configureAccessory(v3Accessory)
     removeStaleAccessories()
 

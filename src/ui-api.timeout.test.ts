@@ -15,14 +15,23 @@ function storageDir() {
   const dir = mkdtempSync(join(tmpdir(), 'updater-timeout-'))
   writeFileSync(join(dir, 'config.json'), JSON.stringify({
     bridge: {},
-    platforms: [{ platform: 'config', port: 8581 }],
+    platforms: [
+      { platform: 'config', port: 8581 },
+    ],
   }))
   writeFileSync(join(dir, '.uix-secrets'), JSON.stringify({ secretKey: 'test-secret-key' }))
   return dir
 }
 
 function silentLog() {
-  return { info: vi.fn(), warn: vi.fn(), error: vi.fn(), debug: vi.fn(), success: vi.fn(), log: vi.fn() } as any
+  return {
+    info: vi.fn(),
+    warn: vi.fn(),
+    error: vi.fn(),
+    debug: vi.fn(),
+    success: vi.fn(),
+    log: vi.fn(),
+  } as any
 }
 
 describe('request timeout', () => {

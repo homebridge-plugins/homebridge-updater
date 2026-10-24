@@ -172,7 +172,10 @@ describe('updateSensor name propagation on rename (#251)', () => {
 
     const api = {
       matter: undefined,
-      hap: { Service: { AccessoryInformation: {} }, Characteristic: { Name: {} } },
+      hap: {
+        Service: { AccessoryInformation: {} },
+        Characteristic: { Name: {} },
+      },
       updatePlatformAccessories: vi.fn((accs: any[]) => updateCalls.push(accs)),
     }
 
@@ -189,7 +192,12 @@ describe('updateSensor name propagation on rename (#251)', () => {
       api.updatePlatformAccessories([accessory])
     }
 
-    return { accessory, updateCalls, sensorNameUpdates, infoNameSets }
+    return {
+      accessory,
+      updateCalls,
+      sensorNameUpdates,
+      infoNameSets,
+    }
   }
 
   it('syncs the cached accessory name to the new config name', () => {

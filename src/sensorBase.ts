@@ -61,26 +61,76 @@ export class HAPSensor implements SensorProtocol {
   private getSensorInfo(sensorType?: string) {
     switch (sensorType?.toLowerCase()) {
       case 'contact':
-        return { serviceType: this.hap.Service.ContactSensor, characteristicType: this.hap.Characteristic.ContactSensorState, untrippedValue: 0, trippedValue: 1 }
+        return {
+          serviceType: this.hap.Service.ContactSensor,
+          characteristicType: this.hap.Characteristic.ContactSensorState,
+          untrippedValue: 0,
+          trippedValue: 1,
+        }
       case 'occupancy':
-        return { serviceType: this.hap.Service.OccupancySensor, characteristicType: this.hap.Characteristic.OccupancyDetected, untrippedValue: 0, trippedValue: 1 }
+        return {
+          serviceType: this.hap.Service.OccupancySensor,
+          characteristicType: this.hap.Characteristic.OccupancyDetected,
+          untrippedValue: 0,
+          trippedValue: 1,
+        }
       case 'smoke':
-        return { serviceType: this.hap.Service.SmokeSensor, characteristicType: this.hap.Characteristic.SmokeDetected, untrippedValue: 0, trippedValue: 1 }
+        return {
+          serviceType: this.hap.Service.SmokeSensor,
+          characteristicType: this.hap.Characteristic.SmokeDetected,
+          untrippedValue: 0,
+          trippedValue: 1,
+        }
       case 'leak':
-        return { serviceType: this.hap.Service.LeakSensor, characteristicType: this.hap.Characteristic.LeakDetected, untrippedValue: 0, trippedValue: 1 }
+        return {
+          serviceType: this.hap.Service.LeakSensor,
+          characteristicType: this.hap.Characteristic.LeakDetected,
+          untrippedValue: 0,
+          trippedValue: 1,
+        }
       case 'light':
-        return { serviceType: this.hap.Service.LightSensor, characteristicType: this.hap.Characteristic.CurrentAmbientLightLevel, untrippedValue: 0.0001, trippedValue: 100000 }
+        return {
+          serviceType: this.hap.Service.LightSensor,
+          characteristicType: this.hap.Characteristic.CurrentAmbientLightLevel,
+          untrippedValue: 0.0001,
+          trippedValue: 100000,
+        }
       case 'humidity':
-        return { serviceType: this.hap.Service.HumiditySensor, characteristicType: this.hap.Characteristic.CurrentRelativeHumidity, untrippedValue: 0, trippedValue: 100 }
+        return {
+          serviceType: this.hap.Service.HumiditySensor,
+          characteristicType: this.hap.Characteristic.CurrentRelativeHumidity,
+          untrippedValue: 0,
+          trippedValue: 100,
+        }
       case 'monoxide':
-        return { serviceType: this.hap.Service.CarbonMonoxideSensor, characteristicType: this.hap.Characteristic.CarbonMonoxideDetected, untrippedValue: 0, trippedValue: 1 }
+        return {
+          serviceType: this.hap.Service.CarbonMonoxideSensor,
+          characteristicType: this.hap.Characteristic.CarbonMonoxideDetected,
+          untrippedValue: 0,
+          trippedValue: 1,
+        }
       case 'dioxide':
-        return { serviceType: this.hap.Service.CarbonDioxideSensor, characteristicType: this.hap.Characteristic.CarbonDioxideDetected, untrippedValue: 0, trippedValue: 1 }
+        return {
+          serviceType: this.hap.Service.CarbonDioxideSensor,
+          characteristicType: this.hap.Characteristic.CarbonDioxideDetected,
+          untrippedValue: 0,
+          trippedValue: 1,
+        }
       case 'air':
-        return { serviceType: this.hap.Service.AirQualitySensor, characteristicType: this.hap.Characteristic.AirQuality, untrippedValue: 1, trippedValue: 5 }
+        return {
+          serviceType: this.hap.Service.AirQualitySensor,
+          characteristicType: this.hap.Characteristic.AirQuality,
+          untrippedValue: 1,
+          trippedValue: 5,
+        }
       case 'motion':
       default:
-        return { serviceType: this.hap.Service.MotionSensor, characteristicType: this.hap.Characteristic.MotionDetected, untrippedValue: false, trippedValue: true }
+        return {
+          serviceType: this.hap.Service.MotionSensor,
+          characteristicType: this.hap.Characteristic.MotionDetected,
+          untrippedValue: false,
+          trippedValue: true,
+        }
     }
   }
 }

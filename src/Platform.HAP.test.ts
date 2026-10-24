@@ -71,7 +71,16 @@ describe('pluginUpdatePlatform legacy UUID migration', () => {
       }
     }
 
-    return { mockLog, mockApi, mockConfig, mockUpdateSensor, mockFailureSensor, uuidMap, didFinishListeners, fireDidFinishLaunching }
+    return {
+      mockLog,
+      mockApi,
+      mockConfig,
+      mockUpdateSensor,
+      mockFailureSensor,
+      uuidMap,
+      didFinishListeners,
+      fireDidFinishLaunching,
+    }
   }
 
   /**
@@ -138,7 +147,9 @@ describe('pluginUpdatePlatform legacy UUID migration', () => {
     function addUpdateSensor() {
       if (!registered) {
         // would create a new accessory and register it
-        mockApi.registerPlatformAccessories(PLUGIN_NAME, PLATFORM_NAME, [{ displayName: 'new-accessory' }])
+        mockApi.registerPlatformAccessories(PLUGIN_NAME, PLATFORM_NAME, [
+          { displayName: 'new-accessory' },
+        ])
         registered = true
       }
     }

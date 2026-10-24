@@ -51,7 +51,9 @@ describe('migrateLegacyPlatformAlias (direct file migration)', () => {
 
   function makeApi(storagePath: string | undefined) {
     return {
-      user: { storagePath: () => storagePath },
+      user: {
+        storagePath: () => storagePath,
+      },
     } as any
   }
 

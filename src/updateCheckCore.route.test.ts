@@ -54,7 +54,9 @@ async function run(uiApi: ReturnType<typeof makeUiApi>, targets: Target[], autoR
 describe('auto-update routing via the UI API', () => {
   it('updates a plugin through the UI API and does not restart itself', async () => {
     const uiApi = makeUiApi(true)
-    await run(uiApi, [{ name: '@homebridge-plugins/homebridge-foo', latestVersion: '2.0.0' }], true)
+    await run(uiApi, [
+      { name: '@homebridge-plugins/homebridge-foo', latestVersion: '2.0.0' },
+    ], true)
     expect(uiApi.triggerUpdate).toHaveBeenCalledWith('@homebridge-plugins/homebridge-foo', '2.0.0')
     expect(uiApi.updatePlugin).not.toHaveBeenCalled()
     expect(uiApi.restartHomebridge).not.toHaveBeenCalled()
@@ -62,7 +64,9 @@ describe('auto-update routing via the UI API', () => {
 
   it('updates homebridge through the UI API rather than npm when configured', async () => {
     const uiApi = makeUiApi(true)
-    await run(uiApi, [{ name: 'homebridge', latestVersion: '2.1.0' }], true)
+    await run(uiApi, [
+      { name: 'homebridge', latestVersion: '2.1.0' },
+    ], true)
     expect(uiApi.triggerUpdate).toHaveBeenCalledWith('homebridge', '2.1.0')
     expect(uiApi.updateHomebridge).not.toHaveBeenCalled()
     expect(uiApi.restartHomebridge).not.toHaveBeenCalled()
@@ -70,7 +74,9 @@ describe('auto-update routing via the UI API', () => {
 
   it('always updates npm via the direct path and restarts itself for it', async () => {
     const uiApi = makeUiApi(true)
-    await run(uiApi, [{ name: 'npm', latestVersion: '11.0.0' }], true)
+    await run(uiApi, [
+      { name: 'npm', latestVersion: '11.0.0' },
+    ], true)
     expect(uiApi.updateNpm).toHaveBeenCalledWith('11.0.0')
     expect(uiApi.triggerUpdate).not.toHaveBeenCalled()
     expect(uiApi.restartHomebridge).toHaveBeenCalledTimes(1)
@@ -78,7 +84,9 @@ describe('auto-update routing via the UI API', () => {
 
   it('falls back to direct npm and restarts itself when the UI API is not configured', async () => {
     const uiApi = makeUiApi(false)
-    await run(uiApi, [{ name: '@homebridge-plugins/homebridge-foo', latestVersion: '2.0.0' }], true)
+    await run(uiApi, [
+      { name: '@homebridge-plugins/homebridge-foo', latestVersion: '2.0.0' },
+    ], true)
     expect(uiApi.updatePlugin).toHaveBeenCalledWith('@homebridge-plugins/homebridge-foo', '2.0.0')
     expect(uiApi.triggerUpdate).not.toHaveBeenCalled()
     expect(uiApi.restartHomebridge).toHaveBeenCalledTimes(1)
