@@ -69,7 +69,7 @@
   "dependencies": {
     "@homebridge/plugin-ui-utils": "^2.2.6",
     "cacheable-lookup": "^7.0.0",
-    "croner": "^10.0.1",
+    "croner": "^11.0.0",
     "jsonwebtoken": "^9.0.3",
     "semver": "^7.8.5"
   },
