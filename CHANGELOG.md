@@ -3,7 +3,7 @@
 ### Changed
 
 - ci: update github actions to their latest versions (#290)
-- chore(deps): dependency updates
+- docs: correct the homebridge version and the failure sensor description in the readme
 
 ## v3.1.14 (2026-10-18)
 
