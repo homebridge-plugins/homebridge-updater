@@ -4,6 +4,7 @@
 
 - ci: update github actions to their latest versions (#290)
 - docs: correct the homebridge version and the failure sensor description in the readme
+- chore: leave CLAUDE.md out of the published package
 
 ## v3.1.14 (2026-10-18)
 
