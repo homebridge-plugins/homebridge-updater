@@ -5,6 +5,7 @@
 - ci: update github actions to their latest versions (#290)
 - docs: correct the homebridge version and the failure sensor description in the readme
 - chore: leave CLAUDE.md out of the published package
+- ci: publish releases with node.js v26, the current lts
 
 ## v3.1.14 (2026-10-18)
 
